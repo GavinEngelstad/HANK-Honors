@@ -1,0 +1,40 @@
+I use a two-step procedure to parameterize the model at a quarterly frequency. First, I calibrate the micro-parameters and frictions within the model. Then, I use a Bayesian estimation of the shock effects to decompose business cycle dynamics into each different shock channel. This ``calibrate then estimate'' approach is common in HANK literature since the method reuses the perturbation matrix instead of having to recompute it each draw, which is the most computationally difficult part of the solution process \autocites{winberry2018method}{auclert2020micro}{auclert2021using}{bayer2024shocks}. Alternative approaches use parallelized estimation strategies and still can take days to estimate the full set of parameters in the model \autocite{acharya2023estimating}.
+
+
+\subsection{Calibration}
+
+\begin{table}[t]
+    \centering
+    \caption{Model Parameters}
+    \input{tables/mod_pars.tex}
+    \label{tab:mod-pars}
+\end{table}
+
+The calibrated model parameters are listed in Table \ref{tab:mod-pars}. Risk aversion is set to 4, which is standard in HANK literature \autocite{kaplan2018monetary}. I take Frisch elasticity of 0.5 from \autocite{chetty2012bounds}. Household productivity transitions are based on \textcite{storesletten2004cyclical} to have persistence 0.963 and cross-sectional standard deviation of 0.5. The slope of the Philips Curve and the Taylor coefficients for inflation and output are set based on standard values in the literature. The government inflation target ensures a 0\% inflation steady state. The values for TFP and monetary policy shocks have no effect in the steady state. The markup is set to give intermediate goods firms a 20\% markup when setting prices. Tax progressivity of 1.18 creates a progressive taxation scheme for the economy \autocite{heathcote2017optimal}.
+
+The government debt target, government spending rate, and transfers are calibrated to match historical US averages for debt to GDP, government spending to GDP, and household transfers to GDP between 1966 and 2019. This process is explained in Appendix \ref{subapp:cal-data}. The values for the discount rate and the disutility of labor are calibrated within the model to match a 2\% annual (0.5\% quarterly) interest rate and full employment in the steady state ($\overline{N} = 1$).
+
+
+\subsection{Estimation Strategy}
+
+To estimate the shocks to the model, I use the Bayesian estimation procedure from \textcite{auclert2021using}. This method matches the covariances of endogenous variables with different time offsets in the impulse response functions (IRFs) in the sequence space of the model to their covariances in real data. Similar to other estimations of HANKs, I use a standard random-walk Metropolis-Hastings (RWMH) algorithm with 250,000 draws and a 50,000 draw burn-in \autocites{auclert2021using}{bayer2024shocks}.
+
+I estimate the persistence and standard deviation for each of the six shocks on quarterly macroeconomic time-series for GDP, inflation, the federal funds rate, hours worked, consumption, and government debt from 1966 to 2019. For inflation and the interest rate, I estimate on the difference from the mean. For GDP, employment, and consumption, I estimate on the difference from log-linear trend over time. The data series and detrending process are explained further in Appendix \ref{subapp:esti-data}. I do not include any microdata in the estimation process, which is a limitation of the paper. However, fitting to distributional microdata generally has a negligible effect on the overall estimates \autocite{bayer2024shocks}.\footnote{\textcite{iao2024estimating} finds a smaller error band for estimates using microdata, but the parameter estimates themselves are very similar.}
+
+I assume weak prior distributions for each of the estimated parameters. The prior for the persistence of each shock is assumed to be a beta distribution with mean 0.5 and standard deviation 0.15. The prior for the standard deviation of each shock is assumed to be an inverse gamma distribution with mean 0.2 and standard deviation 2.
+
+
+\subsection{Estimation Results}
+
+The estimation results are presented in Table \ref{tab:esti}. Impulse response functions for the estimated shocks can be found in Appendix \ref{app:agg-irfs}. I find price markup shocks are the most persistent, with a $\rho$ of 0.995. Shocks to TFP, tax progressivity, household transfers, and government spending are also found to be very persistent, with $\rho$ estimates of 0.951, 0.926, 0.914, and 0.893 respectively. Shocks to monetary policy are the least persistent, with a $\rho$ estimate of 0.607. The estimated standard deviation $\sigma$ is highest for tax progressivity shocks (5.943) and price markup shocks (1.535). Comparatively, the standard deviations of shocks to monetary policy, household transfers, TFP, and government spending are found to be small with values of 0.447, 0.264, 0.154, and 0.132.
+
+\begin{table}[t]
+    \centering
+    \caption{Estimation Results}
+    \input{tables/esti.tex}
+    \label{tab:esti}
+\end{table}
+
+These estimates generally line up with both representative agent and HANK literature. The estimates for shocks to TFP, government spending, and the interest rate mostly line up with \textcites{smets2007shocks}{bayer2024shocks}. My estimate for the persistence of price markup shocks is slightly higher than theirs, but I exclude the wage markup shock which has a very similar estimate, especially in \textcite{smets2007shocks}. Alternatively, this difference could be explained by recent trends of increasing markups within the later estimation window I use \autocite{de2020rise}. My estimated tax progressivity shock decays slightly faster than that of \textcite{bayer2024shocks}. An estimation of a household transfer shock is, to my knowledge, novel.
+
+The credible intervals for the estimates are high compared to other literature \autocites{smets2007shocks}{bayer2024shocks}. This is common when estimating a one-asset, as opposed to two-asset, model \autocite{auclert2021using}. This does add uncertainty to my analysis, however the parameters are all well identified with means of the RWMH process near the posterior modes and still narrow credible intervals. Appendix \ref{app:bayes} features plots of the recursive means (Figure \ref{fig:recursive-means}), posterior distributions (Figure \ref{fig:posteriors}), and posterior covariances (Figure \ref{fig:triangle}) which all suggest good convergence.

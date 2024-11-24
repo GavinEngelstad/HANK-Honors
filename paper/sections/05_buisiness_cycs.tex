@@ -1,0 +1,56 @@
+\subsection{Aggregate Outcomes}
+
+Using the estimated shock parameters, I examine the role each shock plays in business cycles. Figure \ref{fig:agg-var-decomp} features a variance decomposition for key aggregates in my model calculated using the process in Appendix \ref{app:fevd}. Panel (a) describes the business cycle effect on output and inflation. Compared to other literature, I find a larger effect of price markups and a smaller effect of TFP, especially on output \autocites{smets2007shocks}{bayer2024shocks}. This difference is likely explained by the lack of a capital sector in the economy causing changes in firm behavior to be explained by price, not production, factors. Consistent with other estimates, aggregate changes in supply-side factors (TFP and price-markups) account for about 65\% of output volatility, suggesting my estimated price-markup shock plays the role of general supply side shocks, like investment and wage markups, in other estimates \autocite{bayer2024shocks}. Inflation, I find, is most affected by tax progressivity, which explains approximately 50\% of the variance.
+
+\begin{figure}[t]
+    \centering
+    \caption{Variance Decomposition: Aggregates}
+    \begin{subfigure}[t]{\textwidth}
+        \centering
+        \caption{General Aggregates}
+        \input{figures/var_decomp_agg.pgf}
+        \label{subfig:gen-aggs}
+    \end{subfigure}
+    \begin{subfigure}[t]{\textwidth}
+        \centering
+        \caption{Household Decision Factors}
+        \input{figures/var_decomp_hh_dec.pgf}
+    \end{subfigure}
+    \begin{subfigure}[t]{\textwidth}
+        \centering
+        \caption{Household Aggregates}
+        \input{figures/var_decomp_hh_agg.pgf}
+    \end{subfigure}
+    {\scriptsize \textit{Notes:} Forecast error variance decomposition calculated at a 4 quarter time horizon.}
+    \label{fig:agg-var-decomp}
+\end{figure}
+
+Panels (b) and (c) in Figure \ref{fig:agg-var-decomp} explore the effect of business cycles on households. Panel (b) shows how factors that directly affect household decisions are impacted by business cycles. The estimates suggest price markups explain most of the volatility in the wages and dividends paid out to households. Changes in the tax level is almost entirely explained by changes in tax progressivity. Real interest rate variation is mostly explained by monetary policy, though tax progressivity also plays a significant role. Panel (c) breaks down the effect on household aggregates. Consumption and labor variation is mostly explained by supply side factors, especially price markups, while savings variation is explained primarily by shocks to government transfers.
+
+
+\subsection{Decision Rules} \label{subsec:buis-dec-rules}
+
+Next, I examine the business cycle factors that drive changes in household behavior at different points along the wealth distribution. I focus on the 10th, 50th, and 90th percentiles on the productivity distribution to represent low, middle, and high earning households. On the wealth distribution, I look at the 50th, 90th, and 99th percentiles. More than half of households in the model hold 0 savings, so the decision rules for the 50th percentile apply to the entire bottom 50\%. The 90th and 99th percentiles represent households that get a significant portion of their income from their savings. In my analysis, I analyze decision rules at fixed points on the wealth distribution. This means my analysis does not apply to specific individuals in the model, who can move along the distribution, or account shifts in the distribution changing the threshold for wealth percentiles.
+
+Table \ref{tab:ss-dists} gives the decision rules and income shares for households at these productivity and wealth levels in the steady state. Household consumption is most closely associated with productivity. The labor decision rules exhibit cross-sectional income and substitution effects. At the same productivity level, higher savings is always associated with lower labor supply (income effects). However, at low savings levels, higher productivity households work less (income effects dominate) while at high savings levels, higher productivity households work more (substitution effects dominate). Ignoring borrowing constrained households, at low and medium productivity levels, households save less than they start the period with. At high productivity levels, 50th and 90th wealth percentile households end the period with higher than initial savings, but 99th percentile households are net-negative savers. Wages make up a larger fraction of the incomes for higher productivity households and interest makes up a larger fraction of the incomes for higher wealth households. Transfers are most important for households with low productivity and low savings. The tax share for households follows the progressive taxation scheme. For a more detailed breakdown, see Appendix \ref{app:dec-rules} for surface plots for household decision rules (Figure \ref{fig:hh-pol-rules}) and income shares (Figure \ref{fig:hh-income-shares}) for all income and productivity levels.
+
+\begin{table}[t]
+    \centering
+    \caption{Household Steady State Behavior}
+    \include{tables/distribution}
+    \label{tab:ss-dists}
+\end{table}
+
+Within business cycles, the shock determinants of household behavior exhibit significant variability across the wealth and productivity distributions. Figure \ref{fig:hh-var-decomp} gives a variance decomposition of household decision rules for consumption, labor supply, and savings at different productivity and wealth levels. Figure Appendix \ref{app:dec-rules} features IRFs for how decision rules change in response to each shock. Variation in household consumption is explained primarily by price markup shocks across almost all productivity and wealth levels. The importance of price markups suggests wages and dividends, both of which are mostly explained by the shock (Figure \ref{fig:agg-var-decomp}), are the most important determinants of consumption. Especially for low wealth, low productivity households and high productivity households, tax progressivity also plays a very significant role. Relative to other productivity levels, middle productivity households are effected the most by monetary policy. This could be driven by a combination of consumption smoothing by low productivity households (since expected future incomes without savings are the lowest for them) and the smaller share of income interest rates have for higher productivity households (Table \ref{tab:ss-dists}).
+
+\begin{figure}[t!]  % needs to b t!, otherwise shows up at the end of the paper
+    \centering
+    \caption{Variance Decomposition: Household Decision Rules}
+    \input{figures/policy_var_decomp.pgf}
+    {\scriptsize \textit{Notes:} Forecast error variance decomposition calculated at a 4 quarter time horizon. Subplot y-axis is the household position on the wealth distribution.}
+    \label{fig:hh-var-decomp}
+\end{figure}
+
+Labor supply decisions are mostly determined by price markup shocks for low productivity households and tax progressivity shocks for high productivity households. Since price markups play a significant role determining the wage, the importance of price markups on low productivity households suggests substitution effects dominate within this group. In contrast, income effects appear to dominate for high productivity households since the taxes in my model are non-distorting.
+
+Monetary policy shocks explain a significant portion of the variation in savings decisions, especially for low and middle productivity households. Tax progressivity also plays a significant role for this group, suggesting the decreased tax burden on lower-income households when a more progressive tax scheme is imposed is primarily funneled into increased saving by this group. Low and middle productivity borrowing constrained households that do not save in the steady state also do not save at other points in the business cycle.

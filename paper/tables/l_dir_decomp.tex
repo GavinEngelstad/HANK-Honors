@@ -1,0 +1,24 @@
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{lcccccccccc}
+    \toprule
+    & \textbf{Aggregate} & \multicolumn{3}{c}{\textbf{Low Productivity}} & \multicolumn{3}{c}{\textbf{Middle Productivity}} & \multicolumn{3}{c}{\textbf{High Productivity}} \\
+    \cmidrule(lr){3-5} \cmidrule(lr){6-8} \cmidrule(lr){9-11}
+    && 50th & 90th & 99th & 50th & 90th & 99th & 50th & 90th & 99th \\
+    \midrule
+    \textit{Variances} \\
+    \quad $\Var(W)$ & 1,158.7 & 5.3 & 2.1 & 2.0 & 58.5 & 1,168.6 & 166.5 & 10.4 & 8.4 & 7.6 \\
+    \quad $\Var(R)$ & 1,809.4 & 0.0 & 37.1 & 82.0 & 0.0 & 14,061.0 & 4,016.7 & 99.4 & 111.9 & 130.8 \\
+    \quad $\Var(T)$ & 6,267.1 & 82.1 & 186.1 & 280.9 & 208.7 & 15,972.1 & 3,818.5 & 32.6 & 33.9 & 44.7 \\
+    \quad $\Var(\tau)$ & 49.0 & 10.5 & 12.6 & 7.8 & 10.3 & 214.3 & 10.2 & 6.8 & 6.1 & 7.1 \\
+    \midrule
+    \textit{Covariances} \\
+    \quad $\Cov(W, R)$ & 1,405.5 & 0.0 & 6.4 & 4.6 & 0.0 & 3,670.8 & 676.0 & 30.9 & 29.0 & 29.1 \\
+    \quad $\Cov(W, T)$ & -2,672.7 & -20.8 & -16.3 & -12.6 & -110.5 & -4,084.5 & -710.1 & -18.0 & -16.4 & -17.6 \\
+    \quad $\Cov(W, \tau)$ & -3,345.3 & 0.0 & -81.8 & -148.3 & 0.0 & -14,898.6 & -3,882.3 & -56.7 & -61.4 & -76.1 \\
+    \quad $\Cov(R, T)$ & -221.5 & -7.4 & -4.0 & -1.8 & -24.5 & -437.3 & -29.5 & 8.2 & 6.9 & 7.0 \\
+    \quad $\Cov(R, \tau)$ & -294.9 & 0.0 & -21.4 & -25.1 & 0.0 & -1,729.4 & -198.8 & 25.9 & 26.1 & 30.3 \\
+    \quad $\Cov(T, \tau)$ & 536.8 & 29.3 & 48.2 & 46.7 & 46.2 & 1,821.0 & 188.6 & -14.9 & -14.4 & -17.8 \\
+    \bottomrule 
+    \multicolumn{11}{c}{\parbox{\textwidth}{\vspace{1ex} \scriptsize \textit{Notes:} Forecast error variance decomposition calculated at a 4 quarter time horizon with total variance normalized to 100\%. Percentiles correspond to the 50th, 90th, and 99th wealth percentiles.}}
+\end{tabular}%
+}

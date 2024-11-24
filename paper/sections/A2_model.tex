@@ -1,0 +1,151 @@
+\subsection{Household Decision Rules}
+
+From the household budget and preferences in Section \ref{subsec:hh}, households solve
+\begin{alignat*}{4}
+    \max_{\{c_{i, t}, \ell_{i, t}, b_{i, t}\}_{t = 0}^\infty} \quad & \E \sum_{t = 0}^\infty \beta^t \left[ \frac{c_{i, t}^{1 - \gamma}}{1 - \gamma} - \phi \frac{\ell_{i, t}^{1 + \chi}}{1 + \chi} \right] \\
+    \text{subject to} \quad & b_{i, t} + c_{i, t} = R_t b_{i, t-1} + W_t z_{i, t} \ell_{i, t} + D_t + \eta_t - \tau_t^L z_{i, t}^{\tau_t^P} \\
+    & b_{i, t} \geq \underline{b}.
+\end{alignat*}
+This gets the Lagrangian
+\begin{align*}
+    \mathcal{L} = \E \sum_{t = 0}^\infty \beta^t \Biggl[ \frac{c_{i, t}^{1 - \gamma}}{1 - \gamma} &- \phi \frac{\ell_{i, t}^{1 + \chi}}{1 + \chi} \\
+     &+ \lambda_{i, t} \left( R_t b_{i, t-1} + W_t z_{i, t} \ell_{i, t} + D_t + \eta_t - \tau_t^L z_{i, t}^{\tau_t^P} - b_{i, t} - c_{i, t} \right) \notag \\
+     &+ \mu_{i, t} \left(b_{i, t} - \underline{b} \right) \Biggr] \notag
+\end{align*}
+which has the FOCs
+\begin{align*}
+    \lambda_{i, t} &= c_{i, t}^{-\gamma} \\
+    \lambda_{i, t} &= \frac{\phi}{W_t z_{i, t}} \ell_{i, t}^\chi \\
+    \lambda_{i, t} &= \E \beta R_{t + 1} \lambda_{i, t+1} + \mu_{i, t}
+\end{align*}
+for consumption, labor, and bonds respectively. Combining the FOCs for consumption and labor gets the intratemporal constraint
+\begin{equation*}
+    c_{i, t}^{-\gamma} = \frac{\phi}{W_t z_{i, t}} \ell_{i, t}^\chi,
+\end{equation*}
+and combining the FOCs for consumption and bonds gets
+\begin{equation*}
+    c_{i, t}^{-\gamma} = \beta R_{t + 1} c_{i, t + 1}^{-\gamma} + \mu_{i, t}.
+\end{equation*}
+Since $\mu_{i, t} \geq 0$, this becomes the Euler Equation
+\begin{equation*}
+    c_{i, t}^{-\gamma} \geq \beta R_{t + 1} c_{i, t + 1}^{-\gamma}
+\end{equation*}
+which holds with equality whenever the borrowing constraint is not binding and $b_{i, t} > \underline{b}$.
+
+
+\subsection{Final Goods Firm Conditions}
+
+Final goods firms earn revenue $P_t Y_t$ and have costs $\int_0^1 y_{j, t} p_{j, t} dj$. Therefore, the profit maximization condition for firms is
+\begin{equation*}
+    \max_{y_{j, t}} \quad P_t Y_t - \int_0^1 p_{j, t} y_{j, t} dj.
+\end{equation*}
+Plugging in the aggregator, this becomes
+\begin{equation*}
+    \max_{y_{j, t}} \quad P_t \left( \int_0^1 y_{j, t}^\frac{1}{\psi_t} dj \right)^{\psi_t} - \int_0^1 p_{j, t} y_{j, t} dj
+\end{equation*}
+which has the FOC
+\begin{equation*}
+    p_{j, t} = P_t \left( \int_0^1 y_{j, t}^\frac{1}{\psi_t} dj \right)^{\psi_t - 1} y_{j, t}^\frac{1 - \psi_t}{\psi_t}.
+\end{equation*}
+Rearranging this gets
+\begin{equation*}
+    y_{j, t} = \left( \frac{p_{j, t}}{P_t} \right)^\frac{\psi_t}{1 - \psi_t} \left( \int_0^1 y_{j, t}^\frac{1}{\psi_t} dj \right)^{\psi_t} = Y_t \left( \frac{p_{j, t}}{P_t} \right)^\frac{\psi_t}{1 - \psi_t}   
+\end{equation*}
+which is the demand for intermediate good $j$. Plugging this back into the aggregator means
+\begin{align*}
+    Y_t &= \left( \int_0^1 \left(Y_t \left( \frac{p_{j, t}}{P_t} \right)^\frac{\psi_t}{1 - \psi_t}\right)^\frac{1}{\psi_t} dj \right)^{\psi_t} \\
+    &= Y_t \frac{1}{P_t^\frac{\psi_t}{1 - \psi_t}} \left( \int_0^1 p_{j, t}^\frac{1}{1 - \psi_t} dj \right)^{\psi_t}.
+\end{align*}
+Rearranging this gets the price aggregator
+\begin{equation*}
+    P_t = \left(\int_0^1 p_{j, t}^\frac{1}{1 - \psi_t} dj \right)^{1 - \psi_t}.
+\end{equation*}
+
+
+\subsection{Philips Curve Derivation}
+
+Intermediate goods firms pick prices to maximize expected discounted real profits solving
+\begin{equation*}
+    \max_{\{p_{j, t}\}_{t = 0}^\infty} \quad \E \sum_{s = t}^\infty R_{t, s}^{-1} \left[ \frac{p_{j, s}}{P_s} y_{j, s} - W_s n_{j, s} - m_{j, s} \right]
+\end{equation*}
+where $R_{t, s} = \prod_{q = t + 1}^s R_q$ represents the real gross return of bonds from period $t$ to $s$. Plugging in the demand function, production function, and adjustment costs gets
+\begin{equation*}
+    \max_{\{p_{j, t}\}_{t = 0}^\infty} \quad \E \sum_{s = t}^\infty R_{t, s}^{-1} Y_s \left(\frac{p_{j, s}}{P_s}\right)^\frac{1}{1 - \psi_t} \left[ \frac{p_{j, s}}{P_s} - \frac{W_s}{A_s} - \frac{\psi_s}{\psi_s - 1} \frac{1}{2 \kappa} \left(\frac{p_{j, s}}{{\overline{\pi} p_{j, s - 1}}} - 1\right)^2 \right]
+\end{equation*}
+This has the FOC with respect to $p_{j, t}$ of
+\begin{align*}
+    \frac{1}{2 \kappa} Y_t \left(\frac{p_{j, t}}{P_t}\right)^\frac{\psi_t}{1 - \psi_t} p_{j, t}^{-1} \left(\frac{p_{j, t}}{\overline{\pi} p_{j, t-1}} - 1\right)^2 + \frac{\psi_t}{\psi_t - 1} \frac{1}{\kappa} Y_t \left(\frac{p_{j, t}}{P_t}\right)^\frac{\psi_t}{1 - \psi_t} \frac{1}{\overline{\pi} p_{j, t-1}}\left(\frac{p_{j, t}}{\overline{\pi} p_{j, t-1}} - 1\right) \\
+    = \frac{\psi_t}{\psi_t - 1} \frac{1}{\kappa} R_{t+1}^{-1} Y_{t+1} \left(\frac{p_{j, t}}{P_t}\right)^\frac{\psi_t}{1 - \psi_t} \frac{p_{j, t+1}}{\overline{\pi} p_{j, t}} p_{j, t}^{-1} \left(\frac{p_{j, t+1}}{\overline{\pi} p_{j, t}} - 1\right) \\
+    + \frac{\psi_t}{\psi_t - 1} \left(\frac{p_{j, t}}{P_t}\right)^\frac{\psi_t}{1 - \psi_t} p_{j, t}^{-1} \frac{W_t}{A_t} - \frac{1}{\psi_t - 1} Y_t \left(\frac{p_{j, t}}{P_t}\right)^\frac{\psi_t}{1 - \psi_t} p_{j, t}^{-1}.
+\end{align*}
+
+Since firm conditions are identical, we can assume price symmetry across firms so $p_{j, t} = p_{j', t}$ for $j \neq j'$. Using the price aggregator, this gets
+\begin{equation*}
+    P_t = \left(\int_0^1 p_{j, t}^{1 - \psi_t} dj \right)^\frac{1}{1 - \psi_t} = \left(p_{j, t}^{1 - \psi_t} \right)^\frac{1}{1 - \psi_t} = p_j.
+\end{equation*}
+Additionally, since our perturbation method linearizes the system around the steady state, we can ignore the part that's zero in a first order approximation. Finally, rearranging the system yields the Philips Curve
+\begin{equation*}
+    \left(\frac{\pi_t}{\overline{\pi}} - 1\right) = \kappa \left(\frac{W_t}{A_t} - \frac{1}{\psi_t}\right) + R_{t+1} \frac{Y_{t+1}}{Y_t} \left(\frac{\pi_{t+1}}{\overline{\pi}} - 1\right) 
+\end{equation*}
+
+\subsection{Aggregation}
+
+In the model, firm conditions are perfectly symmetrical. Therefore, for $j \neq j'$ we can assume
+\begin{align*}
+    y_{j, t} &= y_{j', t} \\
+    n_{j, t} &= n_{j', t} \\
+    d_{j, t} &= d_{j', t} \\
+    m_{j, t} &= m_{j', t}
+\end{align*}
+Using the aggregators for each variable this gets
+\begin{align*}
+    Y_t &= \left( \int_0^1 y_{j, t}^\frac{\psi_t - 1}{\psi_t} dj \right)^\frac{\psi_t}{\psi_t - 1} = \left( y_{j, t}^\frac{\psi_t - 1}{\psi_t} \right)^\frac{\psi_t}{\psi_t - 1} = y_{j, t} \\
+    N_t &= \int_0^1 n_{j, t} dj = n_{j, t} \\
+    D_t &= \int_0^1 d_{j, t} dj = d_{j, t} \\
+    M_t &= \int_0^1 m_{j, t} dj = m_{j, t}.
+\end{align*}
+
+Then, integrating across the production function gets
+\begin{equation*}
+    Y_t = \int_0^1 y_{j, t} dj = \int_0^1 A_t n_{j, t} dj = A_t N_t,
+\end{equation*}
+integrating across the dividend expression gets
+\begin{equation*}
+    D_t = \int_0^1 d_{j, t} dj = \int_0^1 \left( \frac{p_{j, t}}{P_t} y_{j, t} - W_t n_{j, t} - m_{j, t} \right) dj = Y_t - W_t N_t - M_t,
+\end{equation*}
+and integrating across the adjustment cost expression gets
+\begin{equation*}
+    M_t = \int_0^1 m_{j, t} dj = \int_0^1 \frac{\psi_t}{\psi_t - 1}  \frac{1}{2 \kappa} \left(\frac{p_{j, t}}{\overline{\pi} p_{j, t - 1}} - 1\right)^2 y_{j, t} dj = \frac{\psi_t}{\psi_t - 1} \frac{1}{2 \kappa} \left( \frac{\pi_t}{\overline{\pi}} - 1 \right)^2 Y_t.
+\end{equation*}
+
+
+\subsection{Characterization}
+
+The model is characterized by the household decision rules
+\begin{align*}
+    b_{t} (b_{i, t-1}, z_{i, t}) + c_{t} (b_{i, t-1}, z_{i, t}) &= R_t b_{i, t-1} + W_t z_{i, t} \ell_{t} (b_{i, t-1}, z_{i, t}) + D_t + \eta_t - \tau_t^L z_{i, t}^{\tau_t^P} \\
+    c_{t} (b_{i, t-1}, z_{i, t})^{-\gamma} &= \beta \E R_{t + 1} c_{t + 1} (b_{i, t-1}, z_{i, t}) \\
+    c_{t} (b_{i, t-1}, z_{i, t})^{-\gamma} &= \frac{\phi}{W_t z_{i, t}} \ell_{t} (b_{i, t-1}, z_{i, t}),
+\end{align*}
+distributional movement condition
+\begin{equation*}
+    \Gamma_{t + 1} (b', z') = \int_{\{(b, z) : b_t(b, z) = b'\}} \Pr (z' | z) d \Gamma_t (b, z),
+\end{equation*}
+aggregate equations
+\begin{align*}
+    Y_t &= A_t N_t \\
+    M_t &= \frac{\psi_t}{\psi_t - 1} \frac{1}{2 \kappa} \left( \frac{\pi_t}{\overline{\pi}} - 1 \right)^2 Y_t \\
+    \kappa \frac{\pi_t}{\overline{\pi}} \left( \frac{\pi_t}{\overline{\pi}} - 1 \right) &= 1 - \psi_t + \frac{W_t}{A_t} \psi_t + \kappa \E R_{t + 1}^{-1} \frac{Y_{t + 1}}{Y_t} \frac{\pi_{t + 1}}{\overline{\pi}} \left(\frac{\pi_{t + 1}}{\overline{\pi}} - 1 \right) \\
+    D_t &= Y_t - W_t N_t - M_t \\
+    G_t &= g_t Y_t \\
+    B_t &= (\rho_B + R_t - 1) B_{t - 1} + (2 - \rho_B - \overline{R}) \overline{B} + \eta_t - \overline{\eta} + G_t - \overline{G} \\
+    R_t B_{t - 1} + G_t + \eta_t &= \tau_t^L \int z d \Gamma_t^Z (z) + B_t \\
+    I_t &= \overline{I} \left(\frac{\pi_t}{\overline{\pi}}\right)^{\omega_\pi} \left(\frac{Y_t}{\overline{Y}}\right)^{\omega_Y} \xi_t \\
+    R_t &= \frac{I_{t - 1}}{\pi_t},
+\end{align*}
+and market clearing conditions
+\begin{align*}
+    B_t &= \int b_t (b, z) d \Gamma_t (b, z) \\
+    N_t &= \int z \ell_z (b, z) d \Gamma_t (b, z)
+\end{align*}
+where the goods market clears by Walras's Law.

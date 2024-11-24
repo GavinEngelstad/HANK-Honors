@@ -1,0 +1,24 @@
+To calculate the forecast error variance decomposition (FEVD) in the sequence space, I start with the moving process from \textcite{auclert2021using}
+\[
+    d \mathbf{\tilde{X}}_t = \sum_{s = 0}^\infty d \mathbf{X}_s \epsilon_{t-s}
+\]
+where $d \mathbf{\tilde{X}}_t$ is a vector of outcome differences from trend $d \tilde{x}_{j, t}$, $d \mathbf{X}_s$ is a matrix of impulse responses where the $i$-$j$th element represents the change in outcome $j$ $s$ periods after a shock to $\epsilon_i$, $\frac{d x_{j, s}}{d \epsilon_{j, s}}$, and $\epsilon_{t}$ is a vector of iid shocks $\epsilon_{i, t}$ with diagonal variance-covariance matrix $\Sigma$. Assuming no effects from shocks at time $t$, we know
+\[
+    d \mathbf{\tilde{X}}_{t+h} - d \mathbf{\tilde{X}}_t = \sum_{s = 0}^{h - 1} d \mathbf{X}_s \epsilon_{t+h-s}.
+\]
+This gets Mean Squared Error for output $j$ of
+\begin{align*}
+    \text{MSE} \left(d \tilde{x}_{j, t+h}\right) &= \E \left[\left(\sum_{s = 0}^{h - 1} d x_{j, s} \epsilon_{t+h-s}\right)^2 \right] \\
+    &= \E \left[\sum_{s = 0}^{h - 1} \sum_{r = 0}^{h - 1} d x_{j, s} \epsilon_{t+h-s} \epsilon_{t+r-s}^\top d x_{j, r}^\top\right] \\
+    &= \sum_{s = 0}^{h - 1} d x_{j, s} \Sigma d x_{j, s}^\top \\
+    &= \text{Var} \left(d \tilde{x}_{j, t+h}\right)
+\end{align*}
+where the part of the variance coming from by shock $i$ is
+\[
+    \sum_{s = 0}^{h - 1} d x_{ij, s} \sigma_i^2 d x_{ij, s}^\top.
+\]
+
+Therefore, the FEVD is
+\[
+    \text{FEVD}_{ij} = \frac{\sum_{s = 0}^{h - 1} d x_{ij, s} \sigma_i^2 d x_{ij, s}^\top}{\sum_{s = 0}^{h - 1} d x_{j, s} \Sigma d x_{j, s}^\top}.
+\]

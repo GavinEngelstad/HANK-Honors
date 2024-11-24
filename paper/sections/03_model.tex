@@ -1,0 +1,156 @@
+I model a discrete time, one-asset HANK with incomplete markets stemming from uninsurable, idiosyncratic income risks and nominal rigidities. The economy is composed of a household sector, firm sector, and government sector. Within the model, there are shocks to total factor productivity (TFP) $A_t$, price markups $\psi_t$, government spending $g_t$, transfers to households $\eta_t$, tax progressivity $\tau^P_t$, and monetary policy $\xi_t$.
+
+
+The household sector features a block of dynamically optimizing heterogeneous households that choose to supply labor, consume, and save. Households earn income from their wages, firm profits, and government transfers. Household productivity levels evolve idiosyncratically over time, which they self-insure against by investing in a risk-free government bond.
+
+The firm sector comprises a representative perfectly competitive final goods firm and a block of monopolistically competitive intermediate goods firms. The final goods firm aggregates production from the intermediate goods firms, who produce differentiated goods using labor supplied by households. Following \textcite{rotemberg1982sticky}, intermediate goods firms face quadratic price adjustment costs, creating pricing frictions in the economy.
+
+The government acts as the fiscal and monetary authority. As the fiscal authority, the government supplies a risk-free bond to households, spends endogenously, pays a lump-sum transfer amount to households, and imposes a progressive tax scheme to balance the budget. As the monetary authority, the government sets the interest rate according to a Taylor rule based on the levels of inflation and output.
+
+In this section, I give the assumptions and key equations in the model. For a derivation of the equations and characterization of the model, see Appendix \ref{app:mod}.
+
+
+\subsection{Households} \label{subsec:hh}
+
+The model is populated by a unit continuum of infinitely lived households indexed $i \in [0, 1]$. Each period, households choose to consume $c_{i, t}$, provide labor $\ell_{i, t}$, and hold $b_{i, t}$ of a risk-free government bond which has gross real returns $R_t$ to maximize expected discounted utility. Households have constant relative risk aversion (CRRA) preferences given by 
+\begin{equation*}
+    \max_{\{c_{i,t}, \ell_{i, t}, b_{i, t}\}_{t=0}^\infty} \E \sum_{t = 0}^\infty \beta^t \left[ \frac{c_{i, t}^{1 - \gamma}}{1 - \gamma} - \phi \frac{\ell_{i, t}^{1 + \chi}}{1 + \chi} \right]
+\end{equation*}
+where $\beta$, $\gamma$, $\phi$, and $\chi$ represent the intertemporal discount rate, risk aversion level, relative disutility of labor, and inverse Frisch elasticity of labor supply.
+
+Household productivity $z_{i, t}$ evolves stochastically over time subject to the log-AR(1) process
+\begin{equation*}
+    \log z_{i, t} = \rho_z \log z_{i, t-1} + \epsilon_{z, i, t}, \quad \epsilon_{z, i, t} \sim \mathcal{N} (0, \sigma_z^2) \label{eq:idio_prod}
+\end{equation*}
+where $\rho_z$ and $\sigma_z^2$ represent the persistence and variance of individual productivity shocks. Based on their productivity, labor supply, and the real wage $W_t$, households generate pre-tax labor income $W_t z_{i, t} \ell_{i, t}$. Additionally, dividends $D_t$ and transfers $\eta_t$ are evenly distributed across households from the profits of intermediate goods firms and exogenously by the government.
+
+Following \textcite{mckay2016power}, the government imposes a progressive tax on productivity. Since productivity is exogenous, this acts like a lump sum tax and does not distort household decisions. The tax scheme is given by $\tau_t^L z_{i, t}^{\tau_t^P}$ where $\tau_t^L$ and $\tau_t^P$ measure the level and progressivity of the tax scheme respectively. Therefore, $\tau_t^P < 1$ creates a regressive tax scheme, $\tau_t^P = 1$ creates a proportional tax scheme, and $\tau_t^P > 1$ creates a progressive tax scheme.
+
+Combined, this gets the household budget constraint
+\begin{equation*}
+    b_{i, t} + c_{i, t} = R_t b_{i, t-1} + W_t z_{i, t} \ell_{i, t} + D_t + \eta_t - \tau_t^L z_{i, t}^{\tau_t^P}.
+\end{equation*}
+Households are also subject to the borrowing constraint $b_{i, t} \geq \underline{b}$ which enforces a no-Ponzi condition for all households.
+
+
+\subsection{Distribution of Households}
+
+The distribution of household productivity $\Gamma_t^z (z)$ is fully exogenous and follows a time invariant process. Assuming the initial distribution for $\Gamma_t^z (z)$ is equal to the ergodic distribution of the AR-1 process, the overall distribution stays constant over time.
+
+Each period, households choices depend on their states $z_{i, t}$ and $b_{i, t - 1}$. Given their states, households will follow the decision rules
+\begin{align*}
+    b_t (b_{i, t-1}, z_{i, t}) &= b_{i, t} \\
+    c_t (b_{i, t-1}, z_{i, t}) &= c_{i, t} \\
+    \ell_t (b_{i, t-1}, z_{i, t}) &= \ell_{i, t}.
+\end{align*}
+Therefore, the distribution of household states $\Gamma_t (b, z)$ evolves according to
+\begin{equation*}
+    \Gamma_{t + 1} (b', z') = \int_{\{(b, z) : b_t(b, z) = b'\}} \Pr (z' | z) d \Gamma_t (b, z).
+\end{equation*}
+
+
+\subsection{Firms} \label{subsec:firms}
+
+The model is populated by a representative, competitive final goods firm and a continuum of intermediate goods firms indexed $j \in [0, 1]$.
+
+The final goods firm aggregates intermediate goods $y_{j, t}$ into output $Y_t$ according to the Dixit-Stiglitz aggregator
+\begin{equation*}
+    Y_t = \left( \int_0^1 y_{j, t}^\frac{1}{\psi_t} dj \right)^{\psi_t}
+\end{equation*}
+where $\frac{\psi_t}{\psi_t - 1}$ represents the elasticity of substitution for intermediate goods. Profit maximization for the final goods firm gets the demand for intermediate good $j$
+\begin{equation*}
+    y_{j, t} = Y_t \left(\frac{p_{j, t}}{P_t}\right)^\frac{\psi}{\psi - 1}
+\end{equation*}
+where $p_{j, t}$ is the price of intermediate good $j$ and $P_t$ is the overall price level of the economy given by
+\begin{equation*}
+    P_t = \left(\int_0^1 p_{j, t}^\frac{1}{1 - \psi_t} dj \right)^{1 - \psi_t}.
+\end{equation*}
+
+Intermediate goods firms use productive units of labor $n_{j, t}$ to produce their intermediate good according to
+\begin{equation*}
+    y_{j, t} = A_t n_{j, t}
+\end{equation*}
+where $A_t$ represents the overall productivity level of the economy.
+
+Intermediate goods firms also choose prices subject to quadratic adjustment costs $m_{j, t}$ à la \textcite{rotemberg1982sticky} given by
+\begin{equation*}
+    m_{j, t} = \frac{\psi_t}{\psi_t - 1} \frac{1}{2 \kappa} \left(\frac{p_{j, t}}{\overline{\pi} p_{j, t - 1}} - 1 \right)^2 y_{j, t}
+\end{equation*}
+where $\pi = \frac{P_t}{P_{t - 1}}$ is inflation, $\kappa$ determines the responsiveness of inflation to changes in output, and an overline denotes the steady state of a variable. Compared to the alternative \textcite{calvo1983staggered} rule, the Rotemberg price frictions have a couple advantages. First, price frictions under a Rotemberg rule are more realistic \autocite{richter2016rotemberg}. Additionally, a Rotemberg rule has an analytically solvable Philips curve, which reduces the size of the system. The linearized Philips curve is
+\begin{equation*}
+    \left(\hat{\pi}_t - 1\right) = \kappa \left(\frac{W_t}{A_t} - \frac{1}{\psi_t}\right) + \E R_{t + 1}^{-1} \frac{Y_{t + 1}}{Y_t} \left(\hat{\pi}_{t + 1} - 1\right)
+\end{equation*}
+where the circumflex denotes the geometric deviation from the steady state so that $\hat{\pi}_t = \frac{\pi_t}{\overline{\pi}}$.
+
+Finally, since intermediate goods firms are monopolistically competitive, they can make a profit. Profits will be paid out in the form of real dividends $d_{j, t}$ such that
+\begin{equation*}
+    d_{j, t} = \frac{p_{j, t}}{P_t} y_{i, t} - W_t n_{j, t} - m_{j, t}
+\end{equation*}
+where firms earn real revenue $\frac{p_{j, t}}{P_t} y_{i, t}$ and pay labor costs $W_t n_{j, t}$ and price adjustment costs. Aggregate dividends $D_t$ are
+\begin{equation*}
+    D_t = \int_0^1 d_{j, t} dj.
+\end{equation*}
+
+
+\subsection{Government}
+
+In the economy, the government acts as both the fiscal and monetary authority.
+
+As the fiscal authority, the government spends an exogenous fraction $g_t$ of output so that government spending $G_t$ follows
+\begin{equation*}
+    G_t = g_t Y_t.
+\end{equation*}
+The government also offers the risk-free bond $B_t$ and pays out transfers to households so that
+\begin{equation*}
+    B_t = \overline{B} + \rho_B \left(R_t B_{t-1} - \overline{R} \overline{B} + G_t - \overline{G} + \eta_t - \overline{\eta}\right)
+\end{equation*}
+where $\rho_B$ represents how quickly the government pays back non-steady state levels of debt. In the steady state, this means the government holds a constant stock of debt which it pays all the interest on every period. However, increases in transfers $\eta_t$, the interest rate $R_t$, or government spending $G_t$ will be financed by taking on more debt and paying it back over time. To balance the budget, the government sets the tax level $\tau_L$ so that
+\begin{equation*}
+    R_t B_{t - 1} + G_t + \eta_t = \tau_t^L \int z^{\tau_t^P} d \Gamma_t^Z (z) + B_t.
+\end{equation*}
+
+As the monetary authority, the government sets the interest rate $I_t$ according to the Taylor Rule
+\begin{equation*}
+    I_t = \overline{I} \hat{\pi}_t^{\omega_\pi} \hat{Y}_t^{\omega_Y} \xi_t
+\end{equation*}
+where $\omega_\pi$ and $\omega_Y$ represent the relative importance of inflation and output stabilization and $\xi_t$ is the monetary policy shock. The Fisher relation suggests
+\begin{equation*}
+    R_t = \frac{I_{t - 1}}{\pi_t}.
+\end{equation*}
+
+
+\subsection{Equilibrium}
+
+For the economy to be in equilibrium, the labor, bond, and goods markets all need to clear. Labor market clearing requires aggregate productive labor demand from firms to equal to aggregate productive labor supply by households
+\begin{equation*}
+    N_t = \int z \ell_t (b, z) d \Gamma_t (b, z)
+\end{equation*}
+where $N_t = \int_0^1 n_{j, t} dj$. Bond market clearing requires the supply of bonds by the government to equal household savings
+\begin{equation*}
+    B_t = \int b_t (b, z) d \Gamma_t (b, z).
+\end{equation*}
+Finally, goods market clearing requires consumption, government spending, and price adjustment costs to equal output
+\begin{equation*}
+    Y_t = \int c_t (b, z) d \Gamma_t (b, z) + M_t + G_t
+\end{equation*}
+where $M_t = \int_0^1 m_{j, t} d j$.
+
+Therefore, a solution to the model consists of sequences for prices $\{\pi_t, W_t, M_t, D_t, R_t, I_t, \tau_t^L\}_{t = 0}^\infty$, household decision rules $\{b_t, c_t, \ell_t\}_{t = 0}^\infty$ that solve the household utility maximization problem, the distribution of household states $\{\Gamma_t\}_{t = 0}^\infty$ that evolves following the policy rules, and macroeconomic aggregates $\{Y_t, N_t, B_t, G_t\}_{t = 0}^\infty$ all so that the labor, bond, and goods markets clear subject to exogenous, AR(1) processes for $\{A_t, g_t, \xi_t, \psi_t, \tau_t^P, \eta_t\}_{t = 0}^\infty$.
+
+
+\subsection{Computational Methods}
+
+I solve the model in the sequence-space following \textcite{auclert2021using}. This method has significant computational advantages over standard state-space methods like \textcite{reiter2009solving} or even dimensionality-reduced state-space methods like \textcite{bayer2018solving} since it removes household states, of which there can be thousands, from the system used to solve the model.
+
+The first step to solve the model is to find the steady state. I discretize the household asset and productivity levels into a grid. Household transitions between productivity levels are modeled using a Rouwenhorst process \autocite{kopecky2010finite}. Following \textcite{reiter2009solving}, I add more asset gridpoints closer to the borrowing constraint $\underline{b}$ to address the nonlinearities in the decision rules near that point. I solve for household decision rules using the endogenous grid method \autocite{carroll2006method}. Then, following \textcite{young2010solving}, the distribution $\Gamma_t$ is represented as a histogram at each of the asset-productivity gridpoints, which households travel between based on the savings decision rule.
+
+Shocks are modeled as linear perturbations around the steady state in the sequence space \autocite{auclert2021using}. I use the Python automatic differentiation library Jax to solve for derivatives of the aggregate conditions and the Fake News Algorithm with two-sided numerical differentiation to solve for derivatives of the heterogeneous agent block aggregates \autocites{auclert2021using}. To model the effect of shocks on individual policy rules, I use the disaggregated Fake News derivative and aggregate economic conditions to solve for the linearized effect of the shock on households.
+
+The grid dimensions and sequence space truncation horizon are outlined in Table \ref{tab:comp-pars}. In Appendix TBD, I test the effect of the computational choices on my results, including using a high-dimensional model with substantially more gridpoints and different truncation horizons.
+
+\begin{table}[t]
+    \centering
+    \caption{Computational Parameters}
+    \input{tables/comp_pars.tex}
+    \label{tab:comp-pars}
+\end{table}

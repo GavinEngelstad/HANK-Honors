@@ -1,0 +1,33 @@
+\subsection{Calibration Data} \label{subapp:cal-data}
+I calibrate parameters in the model to match historical US averages relative to GDP. To match the estimation window, all data is quarterly from 1966 to 2019. Since the calibration target for $\overline{N}$ implies $\overline{Y} = 1$, I calibrate both levels ($\overline{B}$ and $\overline{\eta}$) and rates ($\overline{g}$) to their average fraction of GDP. The data is all from FRED (FRED codes in parentheses).
+
+\textbf{Debt Target.}
+I target the steady state level of debt to match the mean US debt to GDP ratio. To calculate this ratio, I divide the historical nominal debt level (GFDEBTN) by the historical nominal GDP level (GDP). To account for differences in units, I divide this ratio by 1,000. Taking the mean gets $\overline{B} = 0.577$.
+
+\textbf{Government Spending.}
+I target the steady state rate of government spending to match the mean fraction of GDP spent by the government To calculate this, I divide nominal government spending (GCE) by nominal GDP (GDP). Taking the mean gets $\overline{g} = 0.202$.
+
+\textbf{Transfers.} 
+I target the steady state government transfers to households to match the ratio of government transfers to households to GDP. I divide nominal social benefits transfers to households (B087RC1Q027SBEA) by nominal GDP (GDP). Taking the mean gets $\overline{\eta} = 0.081$.
+
+
+\subsection{Estimation Data} \label{subapp:esti-data}
+I estimate $Y_t$, $\pi_t$, $I_t$, $N_t$, $C_t$, $B_t$ against US aggregate data for GDP, inflation, the Federal Funds Rate, hours worked, consumption, and government debt. I get the data from FRED (FRED codes in parentheses) at a quarterly frequency from 1966 to 2019. Since the model works in levels instead of percent deviation, the series are all multiplied by the steady state variable in the model before estimation.
+
+\textbf{GDP.}
+To represent $Y_t$ in the model, I use nominal GDP (GDP). I divide by the GDP deflator (GDPDEF) to get real GDP and by population (POPTHM) to make it per-capita. Then, I use the difference from the log-linear trend to estimate off of. Finally, I divide by 4 to make it quarterly and multiply by 100 to make it a percent.
+
+\textbf{Inflation.}
+To represent $\pi_t$ in the model, I use the log quarter to quarter difference in the GDP deflator (GDPDEF). I then subtract out the mean to make it into the difference from trend and multiply by 100 to make it a percent.
+
+\textbf{Federal Funds Rate.}
+To represent $I_t$ in the model, I use the Federal Funds Rate (FEDFUNDS). I subtract out the mean to make it into the difference from trend and divide by 4 to make it quarterly.
+
+\textbf{Hours Worked.}
+To represent $N_t$ in the model, I use total hours worked (HOANBS). I divide by population (POPTHM) to make it per capita. Then, I take the difference from log-linear trend to estimate off of. Finally, I divide by 4 to make it quarterly and multiply by 100 to make it a percent.
+
+\textbf{Consumption.}
+To represent $C_t$ in the model, I use personal consumption expenditure (PCE). I divide by the GDP deflator (GDPDEF) to get real consumption and by population (POPTHM) to make it per capita. Then, I take the difference from the log-linear trend, divide by 4 to make it quarterly, and multiply by 100 to make it a percent.
+
+\textbf{Government Debt.}
+To represent $B_t$ in the model, I use the level of government debt (GFDEBTN). I divide by the GDP deflator (GDPDEF) to get real debt and by population (POPTHM) to make it per capita. Then, I take the difference from the log-linear trend. Finally, I divide by 4 to make it quarterly and multiply by 100 to make it a percent.
