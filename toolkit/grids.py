@@ -3,6 +3,7 @@ Helper functions to make the grids used in HA models
 '''
 
 # load some packages
+from toolkit.helpers import agg_dist
 from scipy import sparse
 import numpy as np
 
@@ -58,7 +59,7 @@ def idiosyncratic_grid(N: int, rho: float, sigma: float) -> tuple[np.ndarray[flo
     grid = np.exp(grid)
     dist = get_ss_tran_mat_dist(tran_mat)
 
-    return grid, dist, tran_mat
+    return grid, dist, tran_mat, agg_dist(dist, grid)
 
 
 # --- Distribution ---

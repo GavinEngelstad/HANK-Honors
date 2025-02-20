@@ -75,6 +75,17 @@ class KrusellSmith(ShockModel):
     inputR = [('K', 1), ('A', 0)]
     def fR(self, K_l, A_t):
         return self.alpha * A_t * K_l**(self.alpha - 1) * self.L**(1 - self.alpha) + 1 - self.delta
+    
+    # govt block
+    # takes: g, Y
+    # gives: G, T
+    inputG = [('g', 0), ('Y', 0)]
+    def fG(self, g_t, Y_t):
+        return g_t * Y_t
+    
+    inputtau = [('G', 0)]
+    def ftau(self, G_t):
+        return G_t
 
     ## --- Market clearing ---
     # Takes: K, curlK
@@ -89,25 +100,25 @@ class KrusellSmith(ShockModel):
     # between points
     @staticmethod
     @nb.njit
-    def egm_back_jit(V_a_p, W_t, R_t, z_grid, beta, z_tran_mat, gamma, a_grid, N_z):
+    def egm_back_jit(V_a_p, W_t, R_t, T_t, z_grid, beta, z_tran_mat, gamma, a_grid, N_z):
         # setup
         Wz_t_grid = W_t * z_grid  # wage at each gridpoint
 
         # egm steps (all on next periods gridpoints)
         dc_t_nextgrid = V_a_p @ (beta * z_tran_mat)
         c_t_nextgrid = dc_t_nextgrid**(-1 / gamma)
-        Ra_l_nextgrid = a_grid[:, None] + c_t_nextgrid - Wz_t_grid
+        Ra_l_nextgrid = a_grid[:, None] + c_t_nextgrid - Wz_t_grid + T_t
 
         # convert to this periods gridpoints
         a_t = func_interp(R_t * a_grid, Ra_l_nextgrid, a_grid.repeat(N_z).reshape((-1, N_z)))  # by linearity can multiply lhs by R instead of div rhs
-        c_t = Wz_t_grid + R_t * a_grid[:, None] - a_t
+        c_t = Wz_t_grid + R_t * a_grid[:, None] - a_t - T_t
         V_a_t = R_t * c_t**(-gamma)
 
         return V_a_t, a_t, c_t
 
-    def egm_back(self, V_a_p, W_t, R_t):
+    def egm_back(self, V_a_p, W_t, R_t, T_t):
         V_a_t, a_t, c_t = KrusellSmith.egm_back_jit(
-                V_a_p, W_t, R_t,
+                V_a_p, W_t, R_t, T_t,
                 self.z_grid, self.beta, self.z_tran_mat, self.gamma, self.a_grid, self.N_z
             )
 
@@ -120,12 +131,13 @@ class KrusellSmith(ShockModel):
     # config dictionaries
     # simple_blocks: dict points variable to evaluation function and inputs
     simple_blocks = {  # order matters, needs to be in an order that can be evaluated
-            'Y': (fY, inputY), 'W': (fW, inputW), 'R': (fR, inputR),  # monetary block
+            'Y': (fY, inputY), 'W': (fW, inputW), 'R': (fR, inputR),  # firm block
+            'G': (fG, inputG), 'tau': (ftau, inputtau),  # govt block
         }
     # ha_block: only one ha block, so in an order list. Has egm function, inputs, aggregators
     ha_block = {  # egm func
         'egm': egm_back,
-        'inputs': ['W', 'R'], 
+        'inputs': ['W', 'R', 'tau'], 
         'aggs': {
             'curlK': (agg_dist, 'a'),
             'curlC': (agg_dist, 'c'),
@@ -136,7 +148,7 @@ class KrusellSmith(ShockModel):
             'mkt': (fmkt, inputmkt),  # capital market
         }
     vars = ['K']  # passed into the function
-    shocks = ['A']
+    shocks = ['A', 'g']
     exog = vars + shocks
 
 

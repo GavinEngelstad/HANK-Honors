@@ -1,24 +1,29 @@
-\begin{tabular}{ccccccccccc}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{@{}w{l}{7em}*{12}{w{c}{3em}}@{}}
     \toprule
-    \multicolumn{2}{c}{\textbf{Productivity}} & \multicolumn{2}{c}{\textbf{Wealth}} & \multicolumn{3}{c}{\textbf{Decision Rules}} & \multicolumn{4}{c}{\textbf{Income (\%)}} \\
-    \cmidrule(lr){1-2} \cmidrule(lr){3-4} \cmidrule(lr){5-7} \cmidrule(lr){8-11}
-    Percentile & Value & Percentile & Value & $c$ & $\ell$ & $b$ & $W$ & $R$ & $T$ & $\tau$ \\
-    \midrule
-    \multicolumn{1}{c}{\multirow{3}{*}{10th}} & \multicolumn{1}{c}{\multirow{3}{*}{0.44}}
-     & 50th & 0.00 & 0.58 & 1.14 & 0.00 & 63.0 & 0.0 & 37.0 & 13.8 \\
-    && 90th & 1.94 & 0.70 & 0.78 & 1.70 & 11.5 & 78.5 & 10.0 & 3.7 \\
-    && 99th & 6.31 & 0.82 & 0.57 & 5.89 & 3.1 & 93.3 & 3.6 & 1.4 \\
-    \cmidrule(lr){1-2}
-    \multicolumn{1}{c}{\multirow{3}{*}{50th}} & \multicolumn{1}{c}{\multirow{3}{*}{1.00}}
-     & 50th & 0.00 & 0.78 & 0.93 & 0.00 & 75.8 & 0.0 & 24.2 & 23.5 \\
-    && 90th & 1.94 & 0.85 & 0.79 & 1.76 & 22.9 & 68.4 & 8.7 & 8.4 \\
-    && 99th & 6.31 & 0.94 & 0.65 & 5.95 & 7.6 & 88.9 & 3.5 & 3.4 \\
-    \cmidrule(lr){1-2}
-    \multicolumn{1}{c}{\multirow{3}{*}{90th}} & \multicolumn{1}{c}{\multirow{3}{*}{2.25}}
-     & 50th & 0.00 & 1.00 & 0.85 & 0.21 & 86.6 & 0.0 & 13.4 & 34.0 \\
-    && 90th & 1.94 & 1.03 & 0.80 & 2.05 & 40.7 & 52.6 & 6.7 & 16.9 \\
-    && 99th & 6.31 & 1.09 & 0.73 & 6.24 & 17.1 & 79.7 & 3.1 & 7.9 \\
+    & \multicolumn{4}{c}{\textbf{Low Income (10\%)}} & \multicolumn{4}{c}{\textbf{Middle Income (50\%)}} & \multicolumn{4}{c}{\textbf{High Income (90\%)}} \\
+    & 0\% & 50\% & 90\% & 99\% & 0\% & 50\% & 90\% & 99\% & 0\% & 50\% & 90\% & 99\% \\
+    \cmidrule(lr){2-5} \cmidrule(lr){6-9} \cmidrule(lr){10-13}
+    \emph{States} \\
+    \quad Productivity & 0.444 & 0.444 & 0.444 & 0.444 & 1.000 & 1.000 & 1.000 & 1.000 & 2.252 & 2.252 & 2.252 & 2.252 \\
+    \quad Assets & 0.000 & 0.040 & 1.874 & 5.896 & 0.000 & 0.040 & 1.874 & 5.896 & 0.000 & 0.040 & 1.874 & 5.896 \\
+    \cmidrule(lr){2-5} \cmidrule(lr){6-9} \cmidrule(lr){10-13}
+    \emph{Decisions} \\
+    \quad Consumption & 0.483 & 0.507 & 0.696 & 0.896 & 0.744 & 0.754 & 0.898 & 1.079 & 1.109 & 1.111 & 1.200 & 1.352 \\
+    \quad Savings & 0.000 & 0.016 & 1.670 & 5.512 & 0.000 & 0.030 & 1.730 & 5.591 & 0.173 & 0.211 & 1.965 & 5.855 \\
+    \cmidrule(lr){2-5} \cmidrule(lr){6-9} \cmidrule(lr){10-13}
+    \emph{Income} \\
+    \quad Wages & 0.327 & 0.327 & 0.327 & 0.327 & 0.737 & 0.737 & 0.737 & 0.737 & 1.660 & 1.660 & 1.660 & 1.660 \\
+    & (67.79) & (62.60) & (13.83) & (5.11) & (99.00) & (93.95) & (28.05) & (11.05) & (129.54) & (125.62) & (52.45) & (23.03) \\
+    \quad Interest & 0.000 & 0.040 & 1.883 & 5.926 & 0.000 & 0.040 & 1.883 & 5.926 & 0.000 & 0.040 & 1.883 & 5.926 \\
+    & (0.00) & (7.66) & (79.60) & (92.47) & (0.00) & (5.10) & (71.67) & (88.83) & (0.00) & (3.03) & (59.51) & (82.22) \\
+    \quad Transfers & 0.248 & 0.248 & 0.248 & 0.248 & 0.248 & 0.248 & 0.248 & 0.248 & 0.248 & 0.248 & 0.248 & 0.248 \\
+    & (51.30) & (47.37) & (10.47) & (3.86) & (33.27) & (31.57) & (9.42) & (3.71) & (19.33) & (18.74) & (7.83) & (3.44) \\
+    \quad Taxes & -0.092 & -0.092 & -0.092 & -0.092 & -0.240 & -0.240 & -0.240 & -0.240 & -0.626 & -0.626 & -0.626 & -0.626 \\
+    & (19.09) & (17.63) & (3.89) & (1.44) & (32.27) & (30.62) & (9.14) & (3.60) & (48.86) & (47.38) & (19.79) & (8.69) \\
+    \quad Total & 0.483 & 0.523 & 2.366 & 6.408 & 0.744 & 0.785 & 2.628 & 6.670 & 1.282 & 1.326 & 3.165 & 7.207 \\
+    & (100.00) & (100.00) & (100.00) & (100.00) & (100.00) & (100.00) & (100.00) & (100.00) & (100.00) & (100.00) & (100.00) & (100.00) \\
     \bottomrule
-    \multicolumn{11}{c}{\parbox{6in}{\vspace{1ex} \scriptsize \textit{Notes:} $c$: Consumption, $\ell$: Labor, $b$: Savings, $W$: Wage, $R$: Interest Rate, $T$: Transfers (Dividends + Govt. Transfers), $\tau$: Taxes. Income is a percentage of pre-tax budget.}}
-\end{tabular}
-\vspace{1ex}
+    \multicolumn{13}{c}{\parbox{\textwidth}{\vspace{1ex} \scriptsize \emph{Notes:} Income share in parenthesis. Column percentiles correspond to the 0th, 50th, 90th, and 99th wealth percentiles.}}
+\end{tabular}%
+}

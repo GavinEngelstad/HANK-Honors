@@ -9,6 +9,7 @@ from toolkit.ss_model import SSModel
 import numpy as np
 import numba as nb
 import jax
+jax.config.update('jax_enable_x64', True)
 
 
 ## class

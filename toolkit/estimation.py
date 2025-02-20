@@ -167,7 +167,6 @@ def gen_posterior_prob(G, data, priors, m=1, meas_err=None, T_max=None):
         # prior probability
         for i, x in enumerate(X):
             logl += priors[i](x)
-        print(X, logl)
 
         return logl * m  # m lets you minimize too
     
@@ -225,6 +224,9 @@ def get_invhessian(f, X, h=1e-4):
 
 ## --- Metropolis Hastings ---
 def metropolis_hastings(drawf, X0, sigmas, bounds, N_sim, N_burn):
+    '''
+    Runs MCMC to estimate parameters for shocks in the model
+    '''
     # initialize vectors
     sim_res = np.empty((N_sim, X0.shape[0]))
     logposterior = np.empty(N_sim)
@@ -269,3 +271,33 @@ def metropolis_hastings(drawf, X0, sigmas, bounds, N_sim, N_burn):
     accept_rate = accept / N_sim
 
     return sim_res, logposterior, accept_rate
+
+
+## --- Historical Decomposition ---
+def historical_decomposition(est_G, rhos, data):
+    '''
+    Perform a histocial decomposition to estimate paths for the shocks in the model
+    '''
+    ## setup
+    T_obs = data.shape[0]
+
+    ## irfs
+    irfs = all_shock_irfs(est_G, rhos)
+    N_z, N_x, T = irfs.shape
+
+    ## contraint matrix for each shock
+    irfmat = np.zeros((T_obs * N_x, T_obs * N_z))
+    for i in range(N_z):
+        zirfmat = np.zeros((T_obs * N_x, T + T_obs - 1))
+        zirfmat[np.arange(N_x)[:, None] * T_obs + np.arange(T_obs)[:, None, None], np.arange(T) + np.arange(T_obs)[:, None, None]] = irfs[i, :, ::-1]
+        irfmat[:, i * T_obs: (i + 1) * T_obs] = zirfmat[:, T - 1:]
+    
+    ## get shock paths
+    shock_paths = np.linalg.lstsq(irfmat, data.T.ravel(), rcond=None)[0].reshape((N_z, -1))
+
+    ## get variable paths
+    series_paths = np.empty((N_z, N_x, T_obs))
+    for i in range(N_z):
+        series_paths[i] = (irfmat[:, i * T_obs: (i + 1) * T_obs] @ shock_paths[i]).reshape((N_x, -1))
+
+    return shock_paths, series_paths

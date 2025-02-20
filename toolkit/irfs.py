@@ -95,7 +95,7 @@ def all_shock_irfs(G, rho, T, sigma=1, dxs=None):
     # if rho is a number, turn it into a dict
     if not isinstance(rho, dict):
         rho = {Z: rho for Z in G.keys()}
-    if not isinstance(rho,dict):
+    if not isinstance(sigma,dict):
         sigma = {Z: sigma for Z in G.keys()}
     
     # calcualte irfs
@@ -198,3 +198,69 @@ def all_shock_variences(irfs, h=None):
             vars[X][Z] = var
     
     return vars
+
+
+## --- Simulation ---
+def sim_shock_path(G, shock_paths, rhos, dxs=None):
+    '''
+    Simulate aggregates after a shock given paths for the shocks
+    '''
+    ## setup
+    T = next(iter(next(iter(G.values())).values())).shape[0]
+    T_obs = next(iter(shock_paths.values())).shape[0]
+
+    ## get irfs
+    irfs = all_shock_irfs(G, rhos, T, dxs=dxs)
+
+    ## loop to get all the paths
+    decomp_series_paths = {}
+    series_paths = {}
+    for Z, Xirf in irfs.items():
+        decomp_series_paths[Z] = {}
+
+        ## get the path for each series
+        for X, irf in Xirf.items():
+            all_dX_path = irf[..., None] * shock_paths[Z]  # T by Tobs matrix, each column is an irf to the shock at time T
+            dX_path = 1 * all_dX_path[0]  # flatten
+            for i in range(1, min(T_obs, T)):
+                dX_path[i:] += all_dX_path[i, :-i]
+
+            # store results
+            decomp_series_paths[Z][X] = dX_path
+            add_or_insert(series_paths, X, dX_path)
+
+    return series_paths, decomp_series_paths
+
+
+def decomp_sim_shock_path(G, shock_paths, rhos, int_block_jacs, dxs=None):
+    '''
+    Simulate aggregates after a shock given paths for the shocks and
+    seperates it into different endogenous channels
+    '''
+    ## setup
+    T = next(iter(next(iter(G.values())).values())).shape[0]
+    T_obs = next(iter(shock_paths.values())).shape[0]
+
+    ## decomposed irfs
+    decomp_irfs = decompose_all_irfs(G, int_block_jacs, {Z: ar_shock_irf(rhos[Z], T, 1) for Z in G.keys()}, G.keys(), dxs=dxs)
+
+    ## loop to get all the paths
+    decomp_series_paths = {}
+    series_paths = {}
+    for Z, XXirf in decomp_irfs.items():
+        ## get the path for each series
+        for Xres, Xirf in XXirf.items():
+            if Xres not in decomp_series_paths:
+                decomp_series_paths[Xres] = {}
+            for Xcause, irf in Xirf.items():
+                # path
+                all_dX_path = irf[..., None] * shock_paths[Z]  # T by Tobs matrix, each column is an irf to the shock at time T
+                dX_path = 1 * all_dX_path[0]  # flatten
+                for i in range(1, min(T_obs, T)):
+                    dX_path[i:] += all_dX_path[i, :-i]
+
+                # store results
+                add_or_insert(decomp_series_paths[Xres], Xcause, dX_path)
+                add_or_insert(series_paths, Xres, dX_path)
+
+    return series_paths, decomp_series_paths

@@ -3,21 +3,24 @@
     \textbf{Parameter} & \textbf{Value} & \textbf{Description} & \textbf{Target} \\
     \midrule
     \textit{Preferences} \\
-    \quad $\beta$ & 0.965 & Discount rate & 2\% annual interest rate \\
+    \quad $\beta$ & 0.945 & Discount rate & 2\% annual interest rate \\
     \quad $\gamma$ & 4 & Risk aversion & \textcite{kaplan2018monetary} \\
     \quad $1/\chi$ & 1/2 & Frisch elasticity & \textcite{chetty2012bounds} \\
-    \quad $\phi$ & 2.55 & Disutility of labor & $\overline{N} = 1$ \\
+    \quad $\phi$ & 3.16 & Disutility of labor & $\overline{N} = 1$ \\
     \quad $\underline{b}$ & 0 & Borrowing constraint \\
     \midrule
     \textit{Productivity} \\
     \quad $\rho_z$ & 0.963 & Productivity persistence & \textcite{storesletten2004cyclical} \\
     \quad $\sigma_z$ & 0.134 & Productivity STD & Cross-sectional STD of 0.5 \\
     \midrule
+    \textit{Unions} \\
+    \quad $\kappa_W$ & 0.1 & Wage Philips Curve \\
+    \midrule
     \textit{Firms} \\
-    \quad $\kappa$ & 0.1 & Philips Curve slope \\
+    \quad $\kappa$ & 0.1 & Philips Curve \\
     \midrule
     \textit{Government} \\
-    \quad $\rho_B$ & 0.95 & Debt persistence & 1 year half-life \\
+    \quad $\rho_B$ & 0.93 & Debt persistence & \textcite{auclert2024intertemporal} \\
     \quad $\overline{B}$ & 0.577 & Govt. debt target & 57.7\% debt to GDP steady state \\
     \quad $\omega_\pi$ & 1.5 & Taylor inflation \\
     \quad $\omega_Y$ & 0 & Taylor output \\
@@ -26,9 +29,10 @@
     \textit{Shock SS} \\
     \quad $\overline{A}$ & 1 & TFP \\
     \quad $\overline{\psi}$ & 1.2 & Markup & 20\% markup \\
+    \quad $\overline{\psi}_W$ & 1.2 & Wage markup & 20\% markup \\
     \quad $\overline{g}$ & 0.202 & Govt. spending & 20.1\% govt. spending \\
     \quad $\overline{\eta}$ & 0.081 & Transfers & 8.1\% transfers \\
-    \quad $\overline{\tau^P}$ & 1.18 & Tax progressivity & \textcite{heathcote2017optimal} \\
+    \quad $\overline{\tau}^P$ & 1.18 & Tax progressivity & \textcite{heathcote2017optimal} \\
     \quad $\overline{\xi}$ & 1 & Monetary shock \\
     \bottomrule
 \end{tabular}

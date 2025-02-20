@@ -38,4 +38,4 @@ class HAModel:
         self.a_grid = asset_grid(N_a, a_min, a_max)
 
         # idiosyncratic grid
-        self.z_grid, self.z_dist, self.z_tran_mat = idiosyncratic_grid(N_z, rho_z, sigma_z)
+        self.z_grid, self.z_dist, self.z_tran_mat, self.z_agg = idiosyncratic_grid(N_z, rho_z, sigma_z)
