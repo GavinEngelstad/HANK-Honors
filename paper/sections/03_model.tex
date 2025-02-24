@@ -1,4 +1,4 @@
-I model a discrete time, one-asset HANK with incomplete markets stemming from uninsurable, idiosyncratic income risks and nominal rigidities. The economy is composed of households, unions, firms and a government. Within the model, there are shocks to total factor productivity (TFP) $A_t$, price markups $\psi_t$, wage markups $\psi_t^W$, government spending $g_t$, transfers to households $\eta_t$, tax progressivity $\tau^P_t$, and monetary policy $\xi_t$.
+I model a discrete time, one-asset HANK with incomplete markets stemming from uninsurable, idiosyncratic income risks and nominal rigidities. The economy is composed of households, unions, firms, and a government. Within the model, there are shocks to total factor productivity (TFP) $A_t$, price markups $\psi_t$, wage markups $\psi_t^W$, government spending $g_t$, transfers to households $\eta_t$, tax progressivity $\tau^P_t$, and monetary policy $\xi_t$.
 
 The household sector features a continuum of dynamically optimizing heterogeneous households that choose to consume and save. Households earn income from their wages, firm profits, and government transfers. Household productivity levels evolve idiosyncratically over time, which they self-insure against by investing in a risk-free government bond.
 
@@ -6,7 +6,7 @@ The union sector includes a labor packer and a continuum of unions. The labor pa
 
 The firm sector comprises a representative perfectly competitive final goods firm and a continuum of monopolistically competitive intermediate goods firms. The final goods firm aggregates production from the intermediate goods firms, who produce differentiated goods using labor supplied by unions. Following \textcite{rotemberg1982sticky}, intermediate goods firms face quadratic price adjustment costs, creating pricing frictions in the economy.
 
-The government acts as the fiscal and monetary authority. As the fiscal authority, the government supplies a risk-free bond to households, spends endogenously, pays a lump-sum transfer amount to households, and imposes a progressive tax scheme to balance the budget. As the monetary authority, the government sets the interest rate according to a Taylor rule based on the levels of inflation and output.
+The government acts as the fiscal and monetary authority. As the fiscal authority, the government supplies a risk-free bond to households, spends exogenously, pays a lump-sum transfer amount to households, and imposes a progressive tax scheme to balance the budget. As the monetary authority, the government sets the interest rate according to a Taylor rule based on the levels of inflation and output.
 
 In this section, I give the assumptions and key equations in the model. For a derivation of the equations and characterization of the model, see Appendix \ref{app:mod}.
 
@@ -38,7 +38,7 @@ Because productivity $z_{i, t}$ follows and exogenous law of motion that is time
 Each period, household's choices depend on their states $z_{i, t}$ and $b_{i, t - 1}$ entering the period. Given these states, households follow the decision rules
 \begin{align*}
     b_t (b_{i, t-1}, z_{i, t}) &= b_{i, t} \\
-    c_t (b_{i, t-1}, z_{i, t}) &= c_{i, t}
+    c_t (b_{i, t-1}, z_{i, t}) &= c_{i, t}.
 \end{align*}
 Therefore, the distribution of household states $\Gamma_t (b, z)$ evolves according to
 \begin{equation*}
@@ -49,7 +49,7 @@ which says the density of households with savings $b'$ and productivity $z'$ is 
 
 \subsection{Unions} \label{subsec:unions}
 
-Labor is provided by a single labor packer that aggregates labor from a unit continuum of unions indexed $k \in [0, 1]$.
+A single labor packer aggregates labor from a unit continuum of unions indexed $k \in [0, 1]$.
 
 The labor packer aggregates labor supplied by each union $n_{k,t}$ into aggregate labot $N_t$ according to the Dixit-Stiglitz aggregator
 \begin{equation*}
@@ -105,7 +105,7 @@ Intermediate goods firms also choose prices subject to quadratic adjustment cost
 \begin{equation*}
     m_{j, t} = \frac{\psi_t}{\psi_t - 1} \frac{1}{2 \kappa} \log\left(\frac{p_{j, t}}{\overline{\pi} p_{j, t - 1}}\right)^2 Y_t
 \end{equation*}
-where $\pi = \frac{P_t}{P_{t - 1}}$ is inflation, $\kappa$ determines the responsiveness of inflation to changes in output, and an overline denotes the steady state of a variable. Compared to the alternative \textcite{calvo1983staggered} rule, the Rotemberg price frictions have a couple advantages. First, price frictions under a Rotemberg rule are more consistent with real data \autocite{richter2016rotemberg}. Additionally, a Rotemberg rule has an analytically solvable Philips curve, which makes the model easier to solve. The Philips curve is
+where $\pi = \frac{P_t}{P_{t - 1}}$ is inflation and $\kappa$ determines the responsiveness of inflation to changes in output. Compared to the alternative \textcite{calvo1983staggered} rule, the Rotemberg price frictions have a couple advantages. First, price frictions under a Rotemberg rule are more consistent with real data \autocite{richter2016rotemberg}. Additionally, a Rotemberg rule has an analytically solvable Philips curve, which makes the model easier to solve. The Philips curve is
 \begin{equation*}
     \log \left(\frac{\pi_t}{\overline{\pi}}\right) = \kappa \left(\frac{W_t}{A_t} - \frac{1}{\psi_t}\right) + R_{t+1} \frac{Y_{t+1}}{Y_t} \log\left(\frac{\pi_{t+1}}{\overline{\pi}}\right).
 \end{equation*}
@@ -132,7 +132,7 @@ The government also offers the risk-free bond $B_t$ and pays out transfers to ho
 \begin{equation*}
     B_t = \overline{B} + \rho_B \left(R_t B_{t-1} - \overline{R} \overline{B} + G_t - \overline{G} + \eta_t - \overline{\eta}\right)
 \end{equation*}
-following \textcite{auclert2024intertemporal} where $\rho_B$ represents how quickly the government pays back non-steady state levels of debt. In the steady state, this means the government holds a constant stock of debt which it pays all the interest on every period. However, increases in transfers $\eta_t$, the interest rate $R_t$, or government spending $G_t$ will be financed by taking on more debt and paying it back over time. To balance the budget, the government sets the tax level $\tau_L$ so that
+following \textcite{auclert2024intertemporal} where $\rho_B$ represents how quickly the government pays back non-steady state levels of debt. In the steady state, this means the government holds a constant stock of debt which it pays all the interest on every period. However, increases in transfers $\eta_t$, the interest rate $R_t$, or government spending $G_t$ will be financed by taking on more debt and paying it back over time. To balance the budget, the government sets the tax level $\tau_L$ so that government spending equals government revenue
 \begin{equation*}
     R_t B_{t - 1} + G_t + \eta_t = \tau_t^L \int z^{\tau_t^P} d \Gamma_t^Z (z) + B_t.
 \end{equation*}
