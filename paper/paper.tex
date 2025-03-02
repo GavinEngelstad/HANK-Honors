@@ -2,7 +2,9 @@
 
 
 % --- Packages ---
-\usepackage{amsmath, amsthm, amsfonts, amssymb, hyperref, soul, latexsym, stmaryrd, booktabs} % fonts and characters
+\usepackage{xcolor}
+\usepackage{amsmath, amsthm, amsfonts, amssymb, soul, latexsym, stmaryrd, booktabs} % fonts and characters
+\usepackage[colorlinks]{hyperref}
 \usepackage{enumitem, ytableau, comment, graphicx, makecell, appendix, titling, scrextend, float, multirow, placeins, subcaption} % utilities
 \usepackage{tikz, tikz-cd, tikzsymbols, pgfplots} % plots crap
 \pgfplotsset{compat=1.18}
@@ -57,10 +59,31 @@
 \usepackage[authordate, backend=biber, ibidtracker=false]{biblatex-chicago} % packages
 \bibliography{sources} % .bib file
 
+% --- Links ---
+% from https://tex.stackexchange.com/questions/525261/better-default-colors-for-hyperref-links
+\def\tmp#1#2#3{%
+  \definecolor{Hy#1color}{#2}{#3}%
+  \hypersetup{#1color=Hy#1color}}
+\tmp{link}{HTML}{800006}
+\tmp{cite}{HTML}{2E7E2A}
+\tmp{file}{HTML}{131877}
+\tmp{url} {HTML}{8A0087}
+\tmp{menu}{HTML}{727500}
+\tmp{run} {HTML}{137776}
+\def\tmp#1#2{%
+  \colorlet{Hy#1bordercolor}{Hy#1color#2}%
+  \hypersetup{#1bordercolor=Hy#1bordercolor}}
+\tmp{link}{!60!white}
+\tmp{cite}{!60!white}
+\tmp{file}{!60!white}
+\tmp{url} {!60!white}
+\tmp{menu}{!60!white}
+\tmp{run} {!60!white}
+
 
 % --- Title ---
 \title{Cross-Sectional Household Heterogeneity in Responses to Macroeconomic Shocks \\ {\large \href{https://gavinengelstad.github.io/assets/pdf/hank/paper.pdf}{[Click Here for the Latest Version]}}}
-\author{Gavin Engelstad\thanks{Replication code available at \url{https://github.com/GavinEngelstad/HANK-Honors}.} \\ \href{mailto:gengelst@macalester.edu}{gengelst@macalester.edu}.}
+\author{Gavin Engelstad\thanks{I thank my advisor Mario Solis-Garcia, committee members Alisdair McKay and Elizabeth Engle, and the Macalester honors cohort for helpful comments. Replication code available at \url{https://github.com/GavinEngelstad/HANK-Honors}.} \\ \href{mailto:gengelst@macalester.edu}{gengelst@macalester.edu}.}
 \date{Last Updated: \today}
 
 
@@ -70,7 +93,7 @@
 \maketitle
 
 \begin{abstract}
-  Research into the effects of business cycles often focuses on aggregate macroeconomic consequences. This paper explores the heterogeneous effects of business cycles on households at different wealth and earnings potential levels. I perform a Bayesian estimation on a HANK model to identify business cycle forces. Then, I decompose the business cycle shocks and transmission channels driving changes in household decision rules using variance and historical decompositions. I find substantial differences in the factors causing changes in consumption decisions across the income distribution and factors causing changes in savings decisions across the wealth distribution. I find fiscal determinants, including transfers, spending, and taxes, are most impactful for low income and low wealth households while supply-side and monetary determinants, including markups and the interest rate, are most impactful for high income and high wealth households.
+  Research into the effects of business cycles often focuses on aggregate macroeconomic consequences. This paper explores the heterogeneous effects of business cycles on households at different wealth and earnings potential levels. I perform a Bayesian estimation on a HANK model to identify business cycle forces. Then, I decompose the business cycle shocks and transmission channels driving changes in household decision rules using variance and historical decompositions. I find the factors causing changes in consumption decisions vary substantially across the income distribution and the factors causing changes in savings decisions vary substantially across the wealth distribution. In addition, I find fiscal determinants, including transfers, spending, and taxes, are most impactful for low income and low wealth households while supply-side and monetary determinants, including markups and the interest rate, are most impactful for high income and high wealth households.
 
   % \noindent \textbf{JEL-Codes:} D310, E320, E630
 
@@ -158,7 +181,7 @@
 \FloatBarrier
 
 % --- Historical Decompositions ---
-\section{Additional Historical Decompostions} \label{app:hist-decomp}
+\section{Additional Historical Decompositions} \label{app:hist-decomp}
 \input{sections/A8_hist_decomp}
 \FloatBarrier
 

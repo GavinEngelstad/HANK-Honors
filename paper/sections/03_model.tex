@@ -27,13 +27,13 @@ where $\rho_z$ and $\sigma_z^2$ represent the persistence and variance of indivi
 
 Following \textcite{mckay2016power}, the government imposes a progressive tax on productivity. Since productivity is exogenous, this acts like a lump sum tax and does not distort household decisions. The tax scheme is given by $\tau_t^L z_{i, t}^{\tau_t^P}$ where $\tau_t^L$ and $\tau_t^P$ measure the level and progressivity of the tax scheme respectively. Therefore, $\tau_t^P < 1$ creates a regressive tax scheme, $\tau_t^P = 1$ creates a proportional tax scheme, and $\tau_t^P > 1$ creates a progressive tax scheme.
 
-Combined, this gets the household budget constraint
+Combined, this results it the household budget constraint
 \begin{equation*}
     b_{i, t} + c_{i, t} = R_t b_{i, t-1} + W_t z_{i, t} \ell_{i, t} + D_t + \eta_t - \tau_t^L z_{i, t}^{\tau_t^P}.
 \end{equation*}
 Households are also subject to the borrowing constraint $b_{i, t} \geq \underline{b}$ which enforces a no-Ponzi condition for all households.
 
-Because productivity $z_{i, t}$ follows and exogenous law of motion that is time invariant, the distribution of household productivity $\Gamma_t^z (z)$ is also fully exogenous and follows a time invariant process. Assuming the initial distribution for $\Gamma_t^z (z)$ is equal to the ergodic distribution of the AR-1 process, the overall distribution stays constant over time, even as individual households change state within it.
+Because productivity $z_{i, t}$ follows an exogenous law of motion that is time invariant, the distribution of household productivity $\Gamma_t^z (z)$ is also fully exogenous and follows a time invariant process. Assuming the initial distribution for $\Gamma_t^z (z)$ is equal to the ergodic distribution of the AR(1) process, the overall distribution stays constant over time, even as individual households change state within it.
 
 Each period, household's choices depend on their states $z_{i, t}$ and $b_{i, t - 1}$ entering the period. Given these states, households follow the decision rules
 \begin{align*}
@@ -53,7 +53,7 @@ A single labor packer aggregates labor from a unit continuum of unions indexed $
 
 The labor packer aggregates labor supplied by each union $n_{k,t}$ into aggregate labot $N_t$ according to the Dixit-Stiglitz aggregator
 \begin{equation*}
-    N_t = \left(\int_0^1 n_{k, t}^\frac{1}{\psi_t^W}\right)^{\psi_t^W}
+    N_t = \left(\int_0^1 n_{k, t}^\frac{1}{\psi_t^W} dk\right)^{\psi_t^W}
 \end{equation*}
 where $\frac{\psi_t^W}{\psi_t^W - 1}$ represents the elasticity of substitution for labor provided by each union. Profit maximization for the union gets the demand for labor provided by each union $k$
 \begin{equation*}
@@ -75,7 +75,7 @@ which is paid in utils where $\kappa^W$ denotes the responsiveness of wages to e
 \begin{equation*}
     \log\left(\frac{\pi_t^W}{\overline{\pi}^W}\right) = \kappa^W \left( \phi L_t^{1 + \chi} - \frac{1}{\psi_t^W} W_t L_t \int z c_t(b, z)^{-\gamma} d\Gamma_t(b, z)\right) + \beta \log\left(\frac{\pi_{t+1}^W}{\overline{\pi}^W}\right)
 \end{equation*}
-where $L_t$ is the amount of labor demanded from each household.
+where $L_t$ is the amount of labor demanded from each household and $c_t(b, z)^{-\gamma}$ is a household's marginal utility of consumption.
 
 
 \subsection{Firms} \label{subsec:firms}
@@ -172,9 +172,9 @@ I solve the model in the sequence-space following \textcite{auclert2021using}. T
 
 The first step to solve the model is to find the steady state. I discretize the household asset and productivity levels into a grid. Household transitions between productivity levels are modeled using a Rouwenhorst process \autocite{kopecky2010finite}. Following \textcite{reiter2009solving}, I add more asset gridpoints closer to the borrowing constraint $\underline{b}$ to address the nonlinearities in the decision rules near that point. I solve for household decision rules using the endogenous grid method \autocite{carroll2006method}. Then, following \textcite{young2010solving}, the distribution $\Gamma_t$ is represented as a histogram at each of the asset-productivity gridpoints, which households travel between based on the savings decision rule.
 
-Shocks are modeled as linear perturbations around the steady state in the sequence space \autocite{auclert2021using}. I use the Python automatic differentiation library Jax to solve for derivatives of the aggregate conditions and the Fake News Algorithm with two-sided numerical differentiation to solve for derivatives of the heterogeneous agent block aggregates \autocites{auclert2021using}. To model the effect of shocks on individual policy rules, I use the disaggregated Fake News derivative and aggregate economic conditions to solve for the linearized effect of the shock on households.
+Shocks are modeled as linear perturbations around the steady state in the sequence space \autocite{auclert2021using}. I use the Python automatic differentiation library Jax to solve for derivatives of the aggregate conditions and the Fake News Algorithm with two-sided numerical differentiation to solve for derivatives of the heterogeneous agent block aggregates \autocites{auclert2021using}. To model the effect of shocks on individual policy rules, I use the disaggregated Fake News derivative and aggregate economic conditions to solve for the linearized effect of the shock on households \autocites{auclert2021using}.
 
-The grid dimensions and sequence space truncation horizon are outlined in Table \ref{tab:comp-pars}. In Appendix \ref{app:comp}, I test the effect of the computational choices on my results, including using a high-dimensional model with substantially more gridpoints and different truncation horizons.
+The grid dimensions and sequence space truncation horizon are outlined in Table \ref{tab:comp-pars}. In Appendix \ref{app:comp}, I test the effect of the truncation horizon on my results, showing that it has a negligible effect on my results.
 
 \begin{table}[t]
     \centering
